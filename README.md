@@ -1,2 +1,2 @@
 # chat-system
- Sistema de automação para envio de mensagems
+ Sistema de automação para envio de mensagens;
