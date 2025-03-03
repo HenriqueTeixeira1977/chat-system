@@ -1,0 +1,18 @@
+CREATE DATABASE chat_system;
+
+USE chat_system;
+
+CREATE TABLE contacts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    email VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    content TEXT NOT NULL,
+    status VARCHAR(20) DEFAULT 'pending',
+    sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

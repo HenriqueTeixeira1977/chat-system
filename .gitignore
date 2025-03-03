@@ -1,0 +1,4 @@
+node_modules/
+*.log
+backend/*/config/db*.js
+backend/*/config/db*.php
