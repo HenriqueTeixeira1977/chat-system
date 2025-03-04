@@ -1,8 +1,49 @@
 body {
     background-color: #f8f9fa;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+#wrapper {
+    display: flex;
+    height: 100%;
+}
+
+#sidebar-wrapper {
+    min-width: 250px;
+    max-width: 250px;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    overflow-y: auto;
+}
+
+.sidebar-heading {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.list-group-item {
+    border: none;
+}
+
+.list-group-item:hover {
+    background-color: #495057 !important;
+}
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
 }
 
 #contactsList {
-    max-height: 300px;
+    max-height: 400px;
     overflow-y: auto;
 }

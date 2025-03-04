@@ -3,96 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Mensagens</title>
+    <title>Chat System - Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-    <div class="container py-5">
-        <h1 class="text-center mb-4">Sistema de Mensagens em Massa</h1>
-
-        <!-- Formulário para adicionar contatos -->
-        <div class="card mb-4 shadow-sm">
-            <div class="card-header bg-success text-white">
-                <h5 class="mb-0">Adicionar Novo Contato</h5>
-            </div>
-            <div class="card-body">
-                <form id="contactForm">
-                    <div class="row g-3">
-                        <div class="col-md-4">
-                            <input type="text" class="form-control" id="contactName" placeholder="Nome" required>
-                        </div>
-                        <div class="col-md-4">
-                            <input type="text" class="form-control" id="contactPhone" placeholder="Telefone" required>
-                        </div>
-                        <div class="col-md-4">
-                            <input type="email" class="form-control" id="contactEmail" placeholder="Email (opcional)">
-                        </div>
-                    </div>
-                    <div class="d-grid mt-3">
-                        <button type="submit" class="btn btn-success">Adicionar Contato</button>
-                    </div>
-                </form>
+    <div class="d-flex" id="wrapper">
+        <!-- Menu lateral -->
+        <div class="bg-dark border-right" id="sidebar-wrapper">
+            <div class="sidebar-heading text-white p-3">Chat System</div>
+            <div class="list-group list-group-flush">
+                <a href="#" class="list-group-item list-group-item-action bg-dark text-white" data-section="dashboard">Dashboard</a>
+                <a href="#" class="list-group-item list-group-item-action bg-dark text-white" data-section="contacts">Contatos</a>
+                <a href="#" class="list-group-item list-group-item-action bg-dark text-white" data-section="add-contact">Adicionar Contato</a>
+                <a href="#" class="list-group-item list-group-item-action bg-dark text-white" data-section="send-message">Enviar Mensagem</a>
             </div>
         </div>
 
-        <!-- Formulário para envio de mensagens -->
-        <div class="card mb-4 shadow-sm">
-            <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">Enviar Mensagem</h5>
-            </div>
-            <div class="card-body">
-                <form id="messageForm">
-                    <div class="mb-3">
-                        <label for="message" class="form-label">Mensagem:</label>
-                        <textarea class="form-control" id="message" rows="4" placeholder="Digite sua mensagem aqui" required></textarea>
+        <!-- Conteúdo principal -->
+        <div id="page-content-wrapper" class="flex-grow-1 p-4">
+            <!-- Dashboard -->
+            <div id="dashboard" class="section active">
+                <h1 class="mb-4">Bem-vindo ao Chat System</h1>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">Status do WhatsApp</h5>
+                                <p class="card-text" id="whatsapp-status">Carregando...</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">Enviar para Todos</button>
+                    <div class="col-md-6">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">Total de Contatos</h5>
+                                <p class="card-text" id="contacts-count">Carregando...</p>
+                            </div>
+                        </div>
                     </div>
-                </form>
+                </div>
             </div>
-        </div>
 
-        <!-- Lista de contatos -->
-        <div class="card shadow-sm">
-            <div class="card-header bg-secondary text-white">
-                <h5 class="mb-0">Lista de Contatos</h5>
-            </div>
-            <div class="card-body">
+            <!-- Contatos -->
+            <div id="contacts" class="section d-none">
+                <h2 class="mb-4">Lista de Contatos</h2>
                 <div id="contactsList" class="list-group"></div>
             </div>
-        </div>
-    </div>
 
-    <!-- Modal para editar contato -->
-    <div class="modal fade" id="editContactModal" tabindex="-1" aria-labelledby="editContactModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editContactModalLabel">Editar Contato</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <!-- Adicionar Contato -->
+            <div id="add-contact" class="section d-none">
+                <h2 class="mb-4">Adicionar Novo Contato</h2>
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <form id="contactForm">
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" id="contactName" placeholder="Nome" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" id="contactPhone" placeholder="Telefone" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="email" class="form-control" id="contactEmail" placeholder="Email (opcional)">
+                                </div>
+                            </div>
+                            <div class="d-grid mt-3">
+                                <button type="submit" class="btn btn-success">Adicionar Contato</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <form id="editContactForm">
-                        <input type="hidden" id="editContactId">
-                        <div class="mb-3">
-                            <label for="editContactName" class="form-label">Nome</label>
-                            <input type="text" class="form-control" id="editContactName" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editContactPhone" class="form-label">Telefone</label>
-                            <input type="text" class="form-control" id="editContactPhone" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editContactEmail" class="form-label">Email (opcional)</label>
-                            <input type="email" class="form-control" id="editContactEmail">
-                        </div>
-                    </form>
+            </div>
+
+            <!-- Enviar Mensagem -->
+            <div id="send-message" class="section d-none">
+                <h2 class="mb-4">Enviar Mensagem</h2>
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <form id="messageForm">
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Mensagem:</label>
+                                <textarea class="form-control" id="message" rows="4" placeholder="Digite sua mensagem aqui" required></textarea>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">Enviar para Todos</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="saveEditContact">Salvar</button>
+            </div>
+
+            <!-- Modal para editar contato -->
+            <div class="modal fade" id="editContactModal" tabindex="-1" aria-labelledby="editContactModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editContactModalLabel">Editar Contato</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="editContactForm">
+                                <input type="hidden" id="editContactId">
+                                <div class="mb-3">
+                                    <label for="editContactName" class="form-label">Nome</label>
+                                    <input type="text" class="form-control" id="editContactName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="editContactPhone" class="form-label">Telefone</label>
+                                    <input type="text" class="form-control" id="editContactPhone" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="editContactEmail" class="form-label">Email (opcional)</label>
+                                    <input type="email" class="form-control" id="editContactEmail">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-primary" id="saveEditContact">Salvar</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

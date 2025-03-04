@@ -1,11 +1,11 @@
-const BASE_URL = 'https://chat-system-backend.onrender.com/api'; // Substitua pelo seu URL real
+const BASE_URL = 'https://chat-system-backend.onrender.com/api'; // URL do Render
+
 document.addEventListener('DOMContentLoaded', () => {
-    loadContacts();
+    loadDashboard();
+    setupNavigation();
 
     // Formulário de mensagens
     const messageForm = document.getElementById('messageForm');
-
-    // No evento de envio de mensagens
     messageForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const message = document.getElementById('message').value;
@@ -20,11 +20,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('Mensagens enviadas com sucesso!');
                 messageForm.reset();
             } else {
-                throw new Error(data.error || `Erro ${response.status}: ${response.statusText}`);
+                throw new Error(data.error || 'Erro ao enviar mensagem');
             }
         } catch (error) {
             console.error('Erro ao enviar mensagem:', error);
-            alert(`Erro ao enviar mensagem: ${error.message}`);
+            alert(`Erro: ${error.message}`);
         }
     });
 
@@ -45,7 +45,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (response.ok && data.success) {
                 alert('Contato adicionado com sucesso!');
                 contactForm.reset();
-                loadContacts();
+                if (document.getElementById('contacts').classList.contains('active')) {
+                    loadContacts();
+                }
+                loadDashboard(); // Atualiza o total de contatos
             } else {
                 throw new Error(data.error || 'Erro ao adicionar contato');
             }
@@ -55,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Botão de salvar edição
+    // Salvar edição de contato
     document.getElementById('saveEditContact').addEventListener('click', async () => {
         const id = document.getElementById('editContactId').value;
         const name = document.getElementById('editContactName').value;
@@ -72,6 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('Contato atualizado com sucesso!');
                 bootstrap.Modal.getInstance(document.getElementById('editContactModal')).hide();
                 loadContacts();
+                loadDashboard(); // Atualiza o total de contatos
             } else {
                 throw new Error(data.error || 'Erro ao atualizar contato');
             }
@@ -81,6 +85,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+async function loadDashboard() {
+    try {
+        const response = await fetch(`${BASE_URL}/contacts`);
+        const contacts = await response.json();
+        document.getElementById('contacts-count').textContent = `${contacts.length} contatos cadastrados`;
+        document.getElementById('whatsapp-status').textContent = 'Conectado'; // Simulado, pode ser ajustado com API
+    } catch (error) {
+        console.error('Erro ao carregar dashboard:', error);
+        document.getElementById('contacts-count').textContent = 'Erro ao carregar';
+        document.getElementById('whatsapp-status').textContent = 'Desconectado';
+    }
+}
 
 async function loadContacts() {
     try {
@@ -102,6 +119,25 @@ async function loadContacts() {
     }
 }
 
+function setupNavigation() {
+    const sections = document.querySelectorAll('.section');
+    const navLinks = document.querySelectorAll('.list-group-item');
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const sectionId = link.getAttribute('data-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+                if (section.id === sectionId) {
+                    section.classList.add('active');
+                    if (sectionId === 'contacts') loadContacts();
+                }
+            });
+        });
+    });
+}
+
 function editContact(id, name, phone, email) {
     document.getElementById('editContactId').value = id;
     document.getElementById('editContactName').value = name;
@@ -120,6 +156,7 @@ async function deleteContact(id) {
             if (response.ok && data.success) {
                 alert('Contato excluído com sucesso!');
                 loadContacts();
+                loadDashboard(); // Atualiza o total de contatos
             } else {
                 throw new Error(data.error || 'Erro ao excluir contato');
             }
