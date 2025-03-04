@@ -1,5 +1,4 @@
-const BASE_URL = 'http://localhost:8080/api';
-
+const BASE_URL = 'https://chat-system-backend.onrender.com/api'; // Substitua pelo seu URL real
 document.addEventListener('DOMContentLoaded', () => {
     loadContacts();
 
