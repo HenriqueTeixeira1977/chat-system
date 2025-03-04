@@ -1,13 +1,22 @@
 const express = require('express');
 const cors = require('cors');
 const apiRoutes = require('./routes/api');
-const mysql = require('mysql2/promise');
+
+//const mysql = require('mysql2/promise');
+
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use('/api', apiRoutes);
 
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running on port ${PORT}`);
+});
+
+
+/*
 // Configuração do MySQL
 const dbConfig = {
     host: 'localhost',
@@ -61,3 +70,5 @@ app.post('/api/send-messages', async (req, res) => {
 app.listen(8080, () => {
     console.log('Server running on port 8080');
 });
+
+*/
