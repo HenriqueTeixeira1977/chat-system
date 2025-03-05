@@ -8,11 +8,10 @@ const router = express.Router();
 
 // Configuração do WhatsApp
 const whatsappClient = new Client({
-    authStrategy: new LocalAuth(), // Salva a sessão localmente
-    puppeteer: { headless: true }  // Executa o navegador em segundo plano
+    authStrategy: new LocalAuth(),
+    puppeteer: { headless: true }
 });
 
-// Inicialização do cliente WhatsApp
 whatsappClient.on('qr', (qr) => {
     console.log('Escaneie o QR code abaixo com o WhatsApp:');
     qrcode.generate(qr, { small: true });
@@ -36,6 +35,7 @@ async function getDbConnection() {
     return await mysql.createConnection(dbConfig);
 }
 
+// Instância para listar contatos (GET /contacts)
 router.get('/contacts', async (req, res) => {
     try {
         const connection = await getDbConnection();
@@ -48,6 +48,7 @@ router.get('/contacts', async (req, res) => {
     }
 });
 
+// Instância para adicionar contatos (POST /contacts)
 router.post('/contacts', async (req, res) => {
     const { name, phone, email } = req.body;
     console.log('Recebido POST /contacts:', { name, phone, email });
@@ -58,7 +59,7 @@ router.post('/contacts', async (req, res) => {
         const connection = await getDbConnection();
         await connection.execute(
             'INSERT INTO contacts (name, phone, email) VALUES (?, ?, ?)',
-            [name, phone, email]
+            [name, phone, email || null]
         );
         await connection.end();
         res.json({ success: true });
@@ -68,6 +69,7 @@ router.post('/contacts', async (req, res) => {
     }
 });
 
+// Instância para editar contatos (PUT /contacts/:id)
 router.put('/contacts/:id', async (req, res) => {
     const { id } = req.params;
     const { name, phone, email } = req.body;
@@ -79,7 +81,7 @@ router.put('/contacts/:id', async (req, res) => {
         const connection = await getDbConnection();
         await connection.execute(
             'UPDATE contacts SET name = ?, phone = ?, email = ? WHERE id = ?',
-            [name, phone, email, id]
+            [name, phone, email || null, id]
         );
         await connection.end();
         res.json({ success: true });
@@ -89,6 +91,7 @@ router.put('/contacts/:id', async (req, res) => {
     }
 });
 
+// Instância para excluir contatos (DELETE /contacts/:id)
 router.delete('/contacts/:id', async (req, res) => {
     const { id } = req.params;
     console.log('Recebido DELETE /contacts/:id:', { id });
@@ -103,6 +106,7 @@ router.delete('/contacts/:id', async (req, res) => {
     }
 });
 
+// Instância para enviar mensagens (POST /send-messages)
 router.post('/send-messages', async (req, res) => {
     const { message } = req.body;
     console.log('Recebido POST /send-messages:', { message });
@@ -119,7 +123,7 @@ router.post('/send-messages', async (req, res) => {
 
         if (contacts.length > 0) {
             for (const contact of contacts) {
-                const phoneNumber = `${contact.phone}@c.us`; // Formato do WhatsApp: 5511987654321@c.us
+                const phoneNumber = `${contact.phone}@c.us`;
                 try {
                     await whatsappClient.sendMessage(phoneNumber, message);
                     console.log(`Mensagem enviada para ${contact.name} (${contact.phone})`);
