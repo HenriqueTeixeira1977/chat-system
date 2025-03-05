@@ -1,19 +1,27 @@
 body {
-    background-color: #f8f9fa;
-    height: 100vh;
+    background-color: #ffffff;
     margin: 0;
-    overflow-y: auto; /* Permite rolagem */
+    overflow-y: auto;
+    font-family: 'Arial', sans-serif;
 }
+
 .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     z-index: 2000;
-    padding: 0.75rem 1rem;
+    padding: 0; /* Reduzido para altura mais controlada */
+    background: linear-gradient(90deg, #51515110, #343a401a);
+    height: 100px; /* Altura fixa padrão do Bootstrap */
+    overflow: hidden; /* Impede expansão excessiva */
 }
 .navbar-brand {
     display: flex;
     align-items: center;
+    padding: 20px;
     font-weight: bold;
-}
-.logo {
+    color: #fff !important;
+}.logo {
     max-width: 40px;
     height: auto;
     border-radius: 50%;
@@ -23,23 +31,35 @@ body {
     display: flex;
     align-items: center;
     padding: 0.5rem 1rem;
-    transition: background-color 0.3s;
+    color: #aeaeae !important;
+    transition: background-color 0.3s, color 0.3s;
 }
-.nav-link:hover {
-    color: #fff;
+.nav-link:hover, .nav-link.active {
+    color: #fff !important;
 }
 
+main{background-color: rgb(230, 230, 230);
+    min-height: 100vh;
+    height: 100vh;
+}
 
+#dashboard{
+    background-color: rgba(255, 0, 0, 0);
+    margin: auto;
+    margin-top: 100px;
+    height: 100vh;
+    max-width: 80%;
+}
+#dashboard .card {
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-radius: 10px;
+    background-color: #fff;
+}
+#dashboard .card:hover {
+    /*transform: translateY(-5px);*/
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+}
 
-.container-fluid {
-    padding-top: 0px; /* Espaço para o navbar fixo */
-}
-.card {
-    transition: transform 0.2s;
-}
-.card:hover {
-    transform: translateY(-5px);
-}
 .list-group-item {
     border: none;
     display: flex;
@@ -48,27 +68,72 @@ body {
     padding: 1rem;
     background-color: #fff;
     margin-bottom: 0.5rem;
-    border-radius: 0.25rem;
+    border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 .list-group-item:hover {
     background-color: #f1f3f5;
 }
-.section {
+.section {background-color: green;
     display: none;
 }
 .section.active {
-    display: block;
+    display: block !important;
 }
+
+#dashboard h1 {
+    display: block !important;
+    opacity: 1;
+}
+
 #contactsList {
     max-height: 60vh;
     overflow-y: auto;
 }
+.btn-lg {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+    border-radius: 8px;
+}
+.form-control {
+    border-radius: 8px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
 
-
+#contacts{background-color: rgb(255, 255, 255);
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;   
+    margin-top: 120px;
+    padding: 50px 50px;
+    border-radius: 10px;
+}
+#add-contact{background-color: rgb(255, 255, 255);
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;   
+    margin-top: 120px;
+    padding: 50px 50px;
+    border-radius: 10px;
+}
+#send-message{background-color: rgb(255, 255, 255);
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;   
+    margin-top: 120px;
+    padding: 50px 50px;
+    border-radius: 10px;
+}
+main #send-message h2{
+    font-size: 2rem;
+}
 
 /* Responsividade */
 @media (max-width: 767.98px) {
+    .navbar {
+        height: auto; /* Permite expansão em mobile quando aberto */
+        padding: 0.5rem 1rem;
+    }
     .navbar-brand .logo {
         max-width: 30px;
     }
@@ -80,11 +145,7 @@ body {
     }
     .container-fluid {
         padding: 1rem;
-        padding-top: 0px;
-    }
-    #dashboard{
-        background-color: rgba(255, 0, 0, 0);
-        padding-top: 20px;
+        padding-top: 56px; /* Mantém alinhado com o navbar colapsado */
     }
     .list-group-item {
         flex-direction: column;
@@ -92,5 +153,12 @@ body {
     }
     .list-group-item .btn {
         margin-top: 0.5rem;
+        width: 100%;
+    }
+    .btn-lg {
+        font-size: 1rem;
+    }
+    .card-body {
+        padding: 1rem;
     }
 }
