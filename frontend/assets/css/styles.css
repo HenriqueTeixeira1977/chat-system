@@ -2,159 +2,95 @@ body {
     background-color: #f8f9fa;
     height: 100vh;
     margin: 0;
-    overflow: hidden;
+    overflow-y: auto; /* Permite rolagem */
 }
-
-#wrapper {
+.navbar {
+    z-index: 2000;
+    padding: 0.75rem 1rem;
+}
+.navbar-brand {
     display: flex;
-    height: 100%;
-    transition: all 0.3s;
-}
-
-#sidebar-wrapper {
-    min-width: 250px;
-    max-width: 250px;
-    height: 100vh;
-    overflow-y: auto;
-    transition: all 0.3s;
-}
-
-#page-content-wrapper {
-    width: 100%;
-    overflow-y: auto;
-}
-
-.sidebar-heading {
-    font-size: 1.5rem;
+    align-items: center;
     font-weight: bold;
-    background-color: #212529;
 }
-
 .logo {
     max-width: 40px;
     height: auto;
     border-radius: 50%;
+    margin-right: 0.5rem;
+}
+.nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s;
+}
+.nav-link:hover {
+    color: #fff;
 }
 
+
+
+.container-fluid {
+    padding-top: 0px; /* Espaço para o navbar fixo */
+}
+.card {
+    transition: transform 0.2s;
+}
+.card:hover {
+    transform: translateY(-5px);
+}
 .list-group-item {
     border: none;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    padding: 10px 15px;
+    padding: 1rem;
+    background-color: #fff;
+    margin-bottom: 0.5rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
-
-.list-group-item i {
-    min-width: 20px; /* Espaço fixo para ícones */
-    text-align: center;
-}
-
-.list-group-item span {
-    margin-left: 10px; /* Espaço entre ícone e texto */
-}
-
 .list-group-item:hover {
-    background-color: #495057 !important;
+    background-color: #f1f3f5;
 }
-
 .section {
     display: none;
 }
-
 .section.active {
     display: block;
 }
-
 #contactsList {
-    max-height: 50vh;
+    max-height: 60vh;
     overflow-y: auto;
 }
 
-/* Botão toggle */
-.toggle-btn {
-    display: none;
-    font-size: 1.5rem;
-    padding: 0.25rem 0.5rem;
-}
+
 
 /* Responsividade */
 @media (max-width: 767.98px) {
-    #sidebar-wrapper {
-        margin-left: -250px;
-        min-width: 60px; /* Largura reduzida quando recolhido */
-        max-width: 60px;
-    }
-
-    #sidebar-wrapper.active {
-        margin-left: 0;
-        min-width: 250px;
-        max-width: 250px;
-    }
-
-    #page-content-wrapper {
-        padding: 1rem;
-    }
-
-    #wrapper.toggled #sidebar-wrapper {
-        margin-left: 0;
-    }
-
-    #wrapper.toggled #page-content-wrapper {
-        margin-left: 250px;
-    }
-
-    .toggle-btn {
-        display: block;
-    }
-
-    .sidebar-heading {
-        flex-wrap: wrap;
-        justify-content: center !important;
-    }
-
-    .logo {
+    .navbar-brand .logo {
         max-width: 30px;
     }
-
-    .sidebar-heading span {
-        font-size: 1.2rem;
-        display: none; /* Esconde o texto "Chat System" quando recolhido */
+    .navbar-nav {
+        padding: 0.5rem 0;
     }
-
-    #sidebar-wrapper:not(.active) .sidebar-heading span {
-        display: none;
+    .nav-link {
+        padding: 0.75rem 1rem;
     }
-
-    #sidebar-wrapper.active .sidebar-heading span {
-        display: block;
+    .container-fluid {
+        padding: 1rem;
+        padding-top: 0px;
     }
-
-    .list-group-item span {
-        display: none; /* Esconde o texto dos itens quando recolhido */
+    #dashboard{
+        background-color: rgba(255, 0, 0, 0);
+        padding-top: 20px;
     }
-
-    #sidebar-wrapper.active .list-group-item span {
-        display: inline; /* Mostra o texto quando expandido */
+    .list-group-item {
+        flex-direction: column;
+        text-align: center;
     }
-
-    .list-group-item i {
-        margin-right: 0; /* Remove margem quando texto está escondido */
-    }
-}
-
-@media (min-width: 768px) {
-    #sidebar-wrapper {
-        margin-left: 0;
-    }
-
-    #wrapper.toggled #sidebar-wrapper {
-        margin-left: -250px;
-    }
-
-    #wrapper.toggled #page-content-wrapper {
-        margin-left: 0;
-    }
-
-    .toggle-btn {
-        display: none;
+    .list-group-item .btn {
+        margin-top: 0.5rem;
     }
 }

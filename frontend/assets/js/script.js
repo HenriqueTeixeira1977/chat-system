@@ -3,9 +3,7 @@ const BASE_URL = 'https://chat-system-backend.onrender.com/api';
 document.addEventListener('DOMContentLoaded', () => {
     loadDashboard();
     setupNavigation();
-    setupMenuToggle();
 
-    // Restante do código sem mudanças
     const messageForm = document.getElementById('messageForm');
     messageForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -120,7 +118,7 @@ async function loadContacts() {
 
 function setupNavigation() {
     const sections = document.querySelectorAll('.section');
-    const navLinks = document.querySelectorAll('.list-group-item');
+    const navLinks = document.querySelectorAll('.nav-link');
 
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
@@ -134,24 +132,13 @@ function setupNavigation() {
                 }
             });
             if (window.innerWidth < 768) {
-                toggleSidebar();
+                const navbarToggler = document.querySelector('.navbar-toggler');
+                if (navbarToggler && !navbarToggler.classList.contains('collapsed')) {
+                    navbarToggler.click(); // Fecha o menu superior em mobile
+                }
             }
         });
     });
-}
-
-function setupMenuToggle() {
-    const toggleButton = document.getElementById('menu-toggle');
-    if (toggleButton) {
-        toggleButton.addEventListener('click', toggleSidebar);
-    } else {
-        console.error('Botão toggle não encontrado!');
-    }
-}
-
-function toggleSidebar() {
-    document.getElementById('wrapper').classList.toggle('toggled');
-    document.getElementById('sidebar-wrapper').classList.toggle('active');
 }
 
 function editContact(id, name, phone, email) {
