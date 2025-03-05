@@ -8,6 +8,7 @@ body {
 #wrapper {
     display: flex;
     height: 100%;
+    transition: all 0.3s;
 }
 
 #sidebar-wrapper {
@@ -15,6 +16,7 @@ body {
     max-width: 250px;
     height: 100vh;
     overflow-y: auto;
+    transition: all 0.3s;
 }
 
 #page-content-wrapper {
@@ -44,6 +46,60 @@ body {
 }
 
 #contactsList {
-    max-height: 400px;
+    max-height: 50vh;
     overflow-y: auto;
+}
+
+/* Botão toggle */
+#menu-toggle {
+    display: none; /* Escondido por padrão */
+}
+
+.visible-mobile {
+    display: block !important; /* Força visibilidade em mobile */
+}
+
+/* Responsividade */
+@media (max-width: 767.98px) {
+    #sidebar-wrapper {
+        margin-left: -250px;
+    }
+
+    #sidebar-wrapper.active {
+        margin-left: 0;
+    }
+
+    #page-content-wrapper {
+        padding: 1rem;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        margin-left: 0;
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        margin-left: 250px;
+    }
+
+    #menu-toggle {
+        display: block; /* Mostra o botão em mobile */
+    }
+}
+
+@media (min-width: 768px) {
+    #sidebar-wrapper {
+        margin-left: 0;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        margin-left: -250px;
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        margin-left: 0;
+    }
+
+    #menu-toggle {
+        display: none; /* Esconde o botão em desktop */
+    }
 }

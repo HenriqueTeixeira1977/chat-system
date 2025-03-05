@@ -1,10 +1,10 @@
-const BASE_URL = 'https://chat-system-backend.onrender.com/api'; // URL do Render
+const BASE_URL = 'https://chat-system-backend.onrender.com/api';
 
 document.addEventListener('DOMContentLoaded', () => {
     loadDashboard();
     setupNavigation();
+    setupMenuToggle();
 
-    // Formulário de mensagens
     const messageForm = document.getElementById('messageForm');
     messageForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -28,7 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Formulário de adicionar contatos
     const contactForm = document.getElementById('contactForm');
     contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -48,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (document.getElementById('contacts').classList.contains('active')) {
                     loadContacts();
                 }
-                loadDashboard(); // Atualiza o total de contatos
+                loadDashboard();
             } else {
                 throw new Error(data.error || 'Erro ao adicionar contato');
             }
@@ -58,7 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Salvar edição de contato
     document.getElementById('saveEditContact').addEventListener('click', async () => {
         const id = document.getElementById('editContactId').value;
         const name = document.getElementById('editContactName').value;
@@ -75,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('Contato atualizado com sucesso!');
                 bootstrap.Modal.getInstance(document.getElementById('editContactModal')).hide();
                 loadContacts();
-                loadDashboard(); // Atualiza o total de contatos
+                loadDashboard();
             } else {
                 throw new Error(data.error || 'Erro ao atualizar contato');
             }
@@ -91,7 +89,7 @@ async function loadDashboard() {
         const response = await fetch(`${BASE_URL}/contacts`);
         const contacts = await response.json();
         document.getElementById('contacts-count').textContent = `${contacts.length} contatos cadastrados`;
-        document.getElementById('whatsapp-status').textContent = 'Conectado'; // Simulado, pode ser ajustado com API
+        document.getElementById('whatsapp-status').textContent = 'Conectado'; // Simulado
     } catch (error) {
         console.error('Erro ao carregar dashboard:', error);
         document.getElementById('contacts-count').textContent = 'Erro ao carregar';
@@ -105,9 +103,9 @@ async function loadContacts() {
         const contacts = await response.json();
         const contactsList = document.getElementById('contactsList');
         contactsList.innerHTML = contacts.map(contact => `
-            <div class="list-group-item d-flex justify-content-between align-items-center">
-                <span>${contact.name} - ${contact.phone}${contact.email ? ` - ${contact.email}` : ''}</span>
-                <div>
+            <div class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                <span class="col-12 col-md-8">${contact.name} - ${contact.phone}${contact.email ? ` - ${contact.email}` : ''}</span>
+                <div class="col-12 col-md-4 text-md-end mt-2 mt-md-0">
                     <button class="btn btn-sm btn-warning me-2" onclick="editContact(${contact.id}, '${contact.name}', '${contact.phone}', '${contact.email || ''}')">Editar</button>
                     <button class="btn btn-sm btn-danger" onclick="deleteContact(${contact.id})">Excluir</button>
                 </div>
@@ -134,8 +132,21 @@ function setupNavigation() {
                     if (sectionId === 'contacts') loadContacts();
                 }
             });
+            if (window.innerWidth < 768) {
+                toggleSidebar(); // Fecha o menu em mobile após clicar
+            }
         });
     });
+}
+
+function setupMenuToggle() {
+    const toggleButton = document.getElementById('menu-toggle');
+    toggleButton.addEventListener('click', toggleSidebar);
+}
+
+function toggleSidebar() {
+    document.getElementById('wrapper').classList.toggle('toggled');
+    document.getElementById('sidebar-wrapper').classList.toggle('active');
 }
 
 function editContact(id, name, phone, email) {
@@ -156,7 +167,7 @@ async function deleteContact(id) {
             if (response.ok && data.success) {
                 alert('Contato excluído com sucesso!');
                 loadContacts();
-                loadDashboard(); // Atualiza o total de contatos
+                loadDashboard();
             } else {
                 throw new Error(data.error || 'Erro ao excluir contato');
             }
