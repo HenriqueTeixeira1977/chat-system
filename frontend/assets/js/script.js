@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupNavigation();
     setupMenuToggle();
 
+    // Restante do código sem mudanças
     const messageForm = document.getElementById('messageForm');
     messageForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -89,7 +90,7 @@ async function loadDashboard() {
         const response = await fetch(`${BASE_URL}/contacts`);
         const contacts = await response.json();
         document.getElementById('contacts-count').textContent = `${contacts.length} contatos cadastrados`;
-        document.getElementById('whatsapp-status').textContent = 'Conectado'; // Simulado
+        document.getElementById('whatsapp-status').textContent = 'Conectado';
     } catch (error) {
         console.error('Erro ao carregar dashboard:', error);
         document.getElementById('contacts-count').textContent = 'Erro ao carregar';
@@ -133,7 +134,7 @@ function setupNavigation() {
                 }
             });
             if (window.innerWidth < 768) {
-                toggleSidebar(); // Fecha o menu em mobile após clicar
+                toggleSidebar();
             }
         });
     });
@@ -141,7 +142,11 @@ function setupNavigation() {
 
 function setupMenuToggle() {
     const toggleButton = document.getElementById('menu-toggle');
-    toggleButton.addEventListener('click', toggleSidebar);
+    if (toggleButton) {
+        toggleButton.addEventListener('click', toggleSidebar);
+    } else {
+        console.error('Botão toggle não encontrado!');
+    }
 }
 
 function toggleSidebar() {
