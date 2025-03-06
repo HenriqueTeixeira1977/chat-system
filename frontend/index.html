@@ -30,18 +30,22 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#" data-section="contacts"><i class="fas fa-address-book me-2"></i>Contatos</a>
                         </li>
-
                         <li class="nav-item">
                             <a class="nav-link" href="#" data-section="send-message"><i class="fas fa-paper-plane me-2"></i>Enviar Mensagem</a>
                         </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-section="send-disparo"><i class="fas fa-paper-plane me-2"></i>Disparo</a>
+                        </li>
+
                     </ul>
                 </div>
             </div>
         </nav>
     </header>    
 
-    <main class="container-fluid p-4">
-        
+    <main class="container-fluid p-4">       
+
         <section id="dashboard" class="section active">
             <h1 class="mb-4 fw-bold text-dark"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</h1>
             <div class="row g-4">
@@ -88,11 +92,6 @@
             </div>
         </section>
 
-        <section id="contacts" class="section d-none">
-            <h2 class="mb-4 fw-bold text-dark">Contatos</h2>
-            <div id="contactsList" class="list-group shadow-sm"></div>
-        </section>
-
         <section id="add-contact" class="section d-none">
             <h2 class="mb-4 fw-bold text-dark">Adicionar Contato</h2>
             <div class="card shadow-sm border-0">
@@ -116,7 +115,10 @@
                 </div>
             </div>
         </section>
-
+        <section id="contacts" class="section d-none">
+            <h2 class="mb-4 fw-bold text-dark">Contatos</h2>
+            <div id="contactsList" class="list-group shadow-sm"></div>
+        </section>
         <section id="send-message" class="section d-none">
             <h2 class="mb-4 fw-bold text-dark">Enviar Mensagem</h2>
             <div class="card shadow-sm border-0">
@@ -133,6 +135,41 @@
                 </div>
             </div>
         </section>
+
+        <section id="disparo" class="section d-none">        
+            <h2 class="mb-4 fw-bold text-dark">Disparo de Mensagem em Massa</h2>
+            
+            <div class="row g-4">
+                <div class="col-md-4 col-sm-6">
+                    <div class="card shadow-sm h-100 border-0 text-center">
+                        <div class="card-body">
+                            <div id="disparo-list" class="disparo-list">
+                <h2 class="mb-4 fw-bold text-dark">Contatos</h2>
+                <div id="contactsList" class="list-group shadow-sm"></div>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>    
+                    
+            <div id="disparo-mensagem" class="disparo-mensagem">
+                <h2 class="mb-4 fw-bold text-dark">Enviar Mensagem</h2>
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <form id="messageForm">
+                            <div class="mb-3">
+                                <label for="message" class="form-label fw-medium">Mensagem:</label>
+                                <textarea class="form-control" id="message" rows="5" placeholder="Digite sua mensagem aqui" required></textarea>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">Enviar para Todos</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
 
         <div class="modal fade" id="editContactModal" tabindex="-1" aria-labelledby="editContactModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -165,6 +202,7 @@
                 </div>
             </div>
         </div>
+
     </main>
 
     <!-- Footer -->
@@ -211,7 +249,7 @@
             <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
                 <!-- Content -->
                 <h6 class="text-uppercase fw-bold mb-4">
-                <i class="fas fa-gem me-3"></i>Company name
+                <i class="fas fa-gem me-3"></i>HT WebSites Builders
                 </h6>
                 <p>
                 Here you can use rows and columns to organize your footer content. Lorem ipsum
@@ -274,8 +312,8 @@
         <!-- Section: Links  -->
     
         <!-- Copyright -->
-        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">© 2021 Copyright:
-            <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+        <div class="text-center p-4" style="background-color: rgb(116, 116, 116);">© 2021 Copyright:
+            <a class="text-reset fw-bold" href="https://henriqueteixeiraoficial.com.br/">HTWebsites.com.br</a>
         </div>
         <!-- Copyright -->
     </footer>

@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const contactForm = document.getElementById('contactForm');
-    contactForm.addEventListener('submit', async (e) => {
+    contactForm.addEventListener('submit', async (e) => {    
         e.preventDefault();
         const name = document.getElementById('contactName').value.trim();
         const phone = document.getElementById('contactPhone').value.trim();

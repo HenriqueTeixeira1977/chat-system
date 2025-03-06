@@ -116,7 +116,7 @@ main{background-color: rgb(230, 230, 230);
     padding: 50px 50px;
     border-radius: 10px;
 }
-#send-message{background-color: rgb(255, 255, 255);
+main #send-message{background-color: rgb(255, 255, 255);
     width: 100%;
     max-width: 1000px;
     margin: auto;   
@@ -126,6 +126,16 @@ main{background-color: rgb(230, 230, 230);
 }
 main #send-message h2{
     font-size: 2rem;
+}
+main #disparo{background-color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+    width: 100%;
+    height: 100vh;
+}
+main #disparo .disparo-list{
+    width: 100%;
 }
 
 /* Responsividade */
