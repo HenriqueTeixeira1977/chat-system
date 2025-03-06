@@ -1,2 +1,3 @@
-2025/03/03-11:41:49.782 21bc Creating DB C:\Users\rique\Desktop\chat-system\backend\node\.wwebjs_auth\session\Default\shared_proto_db since it was missing.
-2025/03/03-11:41:49.797 21bc Reusing MANIFEST C:\Users\rique\Desktop\chat-system\backend\node\.wwebjs_auth\session\Default\shared_proto_db/MANIFEST-000001
+2025/03/06-12:05:58.639 32e0 Reusing MANIFEST C:\xampp\htdocs\chat-system\backend\node\.wwebjs_auth\session\Default\shared_proto_db/MANIFEST-000001
+2025/03/06-12:05:58.646 32e0 Recovering log #3
+2025/03/06-12:05:58.647 32e0 Reusing old log C:\xampp\htdocs\chat-system\backend\node\.wwebjs_auth\session\Default\shared_proto_db/000003.log 
