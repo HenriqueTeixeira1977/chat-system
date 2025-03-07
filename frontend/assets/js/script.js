@@ -89,11 +89,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function loadDashboard() {
     try {
+        // Verifica status do WhatsApp
+        const statusResponse = await fetch(`${BASE_URL}/whatsapp-status`);
+        if (!statusResponse.ok) throw new Error('Erro ao verificar status do WhatsApp');
+        const statusData = await statusResponse.json();
+        const whatsappStatus = document.getElementById('whatsapp-status');
+        const qrCodeContainer = document.getElementById('qr-code-container');
+        const qrCodeImg = document.getElementById('qr-code');
+
+        if (statusData.connected) {
+            whatsappStatus.textContent = 'Conectado';
+            qrCodeContainer.style.display = 'none';
+        } else {
+            whatsappStatus.textContent = 'Desconectado';
+            if (statusData.qrCode) {
+                qrCodeImg.src = statusData.qrCode;
+                qrCodeContainer.style.display = 'block';
+            } else {
+                qrCodeContainer.style.display = 'none';
+            }
+        }
+
+        // Carrega contatos
         const contactsResponse = await fetch(`${BASE_URL}/contacts`);
         if (!contactsResponse.ok) throw new Error('Erro ao buscar contatos');
         const contacts = await contactsResponse.json();
         document.getElementById('contacts-count').textContent = `${contacts.length} contatos cadastrados`;
 
+        // Carrega mensagens
         const messagesResponse = await fetch(`${BASE_URL}/messages`);
         if (!messagesResponse.ok) {
             document.getElementById('messages-sent').textContent = 'N/A';
@@ -101,14 +124,12 @@ async function loadDashboard() {
             const messages = await messagesResponse.json();
             document.getElementById('messages-sent').textContent = `${messages.length} mensagens`;
         }
-
-        document.getElementById('whatsapp-status').textContent = 'Conectado';
-        document.getElementById('dashboard').classList.add('active'); // Garante que o dashboard seja visível
     } catch (error) {
         console.error('Erro ao carregar dashboard:', error);
         document.getElementById('contacts-count').textContent = 'Erro ao carregar';
         document.getElementById('messages-sent').textContent = 'Erro ao carregar';
         document.getElementById('whatsapp-status').textContent = 'Desconectado';
+        document.getElementById('qr-code-container').style.display = 'none';
     }
 }
 
