@@ -37,6 +37,32 @@ whatsappClient.on('disconnected', (reason) => {
 
 whatsappClient.initialize();
 
+// Forçar desconexão para teste (remova após verificar)
+whatsappClient.on('ready', () => {
+    setTimeout(() => {
+        whatsappClient.logout(); // Desconecta após 5s para gerar novo QR
+    }, 5000);
+});
+
+router.get('/whatsapp-status', async (req, res) => {
+    try {
+        console.log('Rota /whatsapp-status chamada. Connected:', isConnected, 'QR:', qrCodeData);
+        if (isConnected) {
+            res.json({ connected: true });
+        } else if (qrCodeData) {
+            const qrImage = await qrcode.toDataURL(qrCodeData);
+            res.json({ connected: false, qrCode: qrImage });
+        } else {
+            res.json({ connected: false, qrCode: null });
+        }
+    } catch (error) {
+        console.error('Erro ao gerar QR code:', error);
+        res.status(500).json({ error: 'Erro ao verificar status do WhatsApp' });
+    }
+});
+
+// Outras rotas permanecem iguais (contacts, messages, etc.)
+
 async function getDbConnection() {
     return await mysql.createConnection(dbConfig);
 }
